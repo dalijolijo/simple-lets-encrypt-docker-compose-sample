@@ -4,19 +4,22 @@ services:
 
   wordpress:
     image: dalijolijo/wordpress:7.2-apache-bcmath
+    container_name: wordpress
     environment:
-      WORDPRESS_DB_PASSWORD: somepassword
-      VIRTUAL_HOST: exampledomain.com
-      LETSENCRYPT_HOST: exampledomain.com
-      LETSENCRYPT_EMAIL: admin@exampledomain.com
+      WORDPRESS_DB_PASSWORD: wordpress_pwd
+      VIRTUAL_HOST: example_9e98d434-ec06-49d3-8dba-041726e407a8.pub.cloud.scaleway.com
+      LETSENCRYPT_HOST: example_9e98d434-ec06-49d3-8dba-041726e407a8.pub.cloud.scaleway.com
+      LETSENCRYPT_EMAIL: test@gmx.net
 
   mysql:
     image: mariadb
+    container_name: mariadb
     environment:
-      MYSQL_ROOT_PASSWORD: somepassword
+      MYSQL_ROOT_PASSWORD: mysql_pwd
 
   nginx-proxy:
     image: jwilder/nginx-proxy
+    container_name: nginx-proxy
     ports:
       - "80:80"
       - "443:443"
@@ -28,6 +31,7 @@ services:
 
   letsencrypt-nginx-proxy-companion:
     image: jrcs/letsencrypt-nginx-proxy-companion
+    container_name: letsencrypt-nginx-proxy-companion
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
     volumes_from:
