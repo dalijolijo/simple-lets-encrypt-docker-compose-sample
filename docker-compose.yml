@@ -5,17 +5,24 @@ services:
   wordpress:
     image: dalijolijo/wordpress:7.2-apache-bcmath
     container_name: wordpress
+    depends_on:
+       - mysql
     environment:
+      WORDPRESS_DB_HOST: mysql:3306
+      WORDPRESS_DB_USER: wordpress_user
       WORDPRESS_DB_PASSWORD: wordpress_pwd
-      VIRTUAL_HOST: example_9e98d434-ec06-49d3-8dba-041726e407a8.pub.cloud.scaleway.com
-      LETSENCRYPT_HOST: example_9e98d434-ec06-49d3-8dba-041726e407a8.pub.cloud.scaleway.com
-      LETSENCRYPT_EMAIL: test@gmx.net
+      VIRTUAL_HOST: example_v220200132547106119.bestsrv.de
+      LETSENCRYPT_HOST: example_v220200132547106119.bestsrv.de
+      LETSENCRYPT_EMAIL: example@gmx.net
 
   mysql:
     image: mariadb
     container_name: mariadb
     environment:
-      MYSQL_ROOT_PASSWORD: mysql_pwd
+       MYSQL_ROOT_PASSWORD: wordpress_pwd
+       MYSQL_DATABASE: wordpress
+       MYSQL_USER: wordpress_user
+       MYSQL_PASSWORD: wordpress_pwd
 
   nginx-proxy:
     image: jwilder/nginx-proxy
